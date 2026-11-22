@@ -1,88 +1,379 @@
 <!doctype html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0f1115">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<title>Meu Treino</title>
-<style>
-:root{--bg:#0f1115;--card:#181b22;--line:#262b36;--tx:#eef1f6;--mu:#8b93a4;--ac:#ff6a1a;--ok:#2fbf71;--rd:#e5484d}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-header{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:8px;padding:12px 14px;background:var(--bg);border-bottom:1px solid var(--line)}
-header h2{margin:0;font-size:18px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-main{padding:14px 14px 150px;max-width:720px;margin:0 auto}
-nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:#12151b;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);z-index:6}
-nav button{flex:1;background:none;border:0;color:var(--mu);padding:10px 4px;font-size:12px}
-nav button.on{color:var(--ac)}
-nav button span{display:block;font-size:20px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0}
-.card.click{cursor:pointer}
-.card.done{border-color:var(--ok)}
-.muted{color:var(--mu);font-size:14px}
-.btn{display:block;width:100%;background:var(--ac);color:#fff;border:0;border-radius:12px;padding:13px;font-size:16px;font-weight:600;margin:10px 0}
-.btn.sec{background:#262b36}
-.btn.red{background:var(--rd)}
-.btn.sm,.sm{padding:8px 12px;font-size:14px;width:auto;display:inline-block;margin:4px 4px 0 0}
-a.btn{text-decoration:none;text-align:center}
-.ico{background:#262b36;color:var(--tx);border:0;border-radius:10px;min-width:38px;height:38px;font-size:18px}
-.ico.sm{min-width:32px;height:32px;font-size:14px;padding:0}
-.link{background:none;border:0;color:var(--mu);padding:10px;width:100%}
-input,textarea,select{width:100%;background:#0f1115;color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:11px;font-size:16px;margin:4px 0 8px;font-family:inherit}
-label{font-size:13px;color:var(--mu);display:block}
-.row{display:flex;align-items:center;gap:8px}
-.grow{flex:1}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.grid4 input{padding:9px 6px;text-align:center}
-.tag{background:#262b36;color:var(--mu);border-radius:20px;padding:2px 10px;font-size:12px;white-space:nowrap}
-.chips{display:flex;gap:6px;overflow-x:auto;padding:4px 0 8px}
-.chips button{flex:none;background:#262b36;color:var(--tx);border:0;border-radius:20px;padding:7px 13px;font-size:14px}
-.chips button.on{background:var(--ac)}
-.hidden{display:none}
-.det{margin-top:10px;font-size:15px}
-.det p{margin:6px 0}
-.login{max-width:380px;margin:0 auto;padding:60px 20px}
-.login h1{font-size:30px;margin:0 0 6px}
-.ov{position:fixed;inset:0;background:#000a;z-index:20;display:flex;align-items:flex-end;justify-content:center}
-.sheet{background:var(--bg);border-radius:18px 18px 0 0;width:100%;max-width:720px;max-height:90vh;overflow:auto;padding:16px 16px 28px;border:1px solid var(--line)}
-.sheet h3{margin:0 0 10px}
-.savebar{position:fixed;left:0;right:0;bottom:calc(58px + env(safe-area-inset-bottom));padding:8px 14px;background:linear-gradient(transparent,var(--bg) 40%);z-index:5;max-width:720px;margin:0 auto}
-.savebar .btn{margin:0}
-#toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:#fff;color:#000;padding:10px 16px;border-radius:20px;font-size:14px;z-index:40;opacity:0;transition:.25s;pointer-events:none;max-width:90%;text-align:center}
-#toast.on{opacity:1}
-.chk{width:26px;height:26px;accent-color:var(--ok);margin:0;flex:none}
-.pill{display:inline-block;background:#262b36;border-radius:8px;padding:3px 9px;margin:2px 4px 2px 0;font-size:13px}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0f1115">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Meu Treino</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --card: #181b22;
+      --line: #262b36;
+      --tx: #eef1f6;
+      --mu: #8b93a4;
+      --ac: #ff6a1a;
+      --ok: #2fbf71;
+      --rd: #e5484d
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--tx);
+      font: 16px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 14px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line)
+    }
+
+    header h2 {
+      margin: 0;
+      font-size: 18px;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    main {
+      padding: 14px 14px 150px;
+      max-width: 720px;
+      margin: 0 auto
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      background: #12151b;
+      border-top: 1px solid var(--line);
+      padding-bottom: env(safe-area-inset-bottom);
+      z-index: 6
+    }
+
+    nav button {
+      flex: 1;
+      background: none;
+      border: 0;
+      color: var(--mu);
+      padding: 10px 4px;
+      font-size: 12px
+    }
+
+    nav button.on {
+      color: var(--ac)
+    }
+
+    nav button span {
+      display: block;
+      font-size: 20px
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      margin: 10px 0
+    }
+
+    .card.click {
+      cursor: pointer
+    }
+
+    .card.done {
+      border-color: var(--ok)
+    }
+
+    .muted {
+      color: var(--mu);
+      font-size: 14px
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      background: var(--ac);
+      color: #fff;
+      border: 0;
+      border-radius: 12px;
+      padding: 13px;
+      font-size: 16px;
+      font-weight: 600;
+      margin: 10px 0
+    }
+
+    .btn.sec {
+      background: #262b36
+    }
+
+    .btn.red {
+      background: var(--rd)
+    }
+
+    .btn.sm,
+    .sm {
+      padding: 8px 12px;
+      font-size: 14px;
+      width: auto;
+      display: inline-block;
+      margin: 4px 4px 0 0
+    }
+
+    a.btn {
+      text-decoration: none;
+      text-align: center
+    }
+
+    .ico {
+      background: #262b36;
+      color: var(--tx);
+      border: 0;
+      border-radius: 10px;
+      min-width: 38px;
+      height: 38px;
+      font-size: 18px
+    }
+
+    .ico.sm {
+      min-width: 32px;
+      height: 32px;
+      font-size: 14px;
+      padding: 0
+    }
+
+    .link {
+      background: none;
+      border: 0;
+      color: var(--mu);
+      padding: 10px;
+      width: 100%
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      background: #0f1115;
+      color: var(--tx);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 11px;
+      font-size: 16px;
+      margin: 4px 0 8px;
+      font-family: inherit
+    }
+
+    label {
+      font-size: 13px;
+      color: var(--mu);
+      display: block
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .grow {
+      flex: 1
+    }
+
+    .grid4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px
+    }
+
+    .grid4 input {
+      padding: 9px 6px;
+      text-align: center
+    }
+
+    .tag {
+      background: #262b36;
+      color: var(--mu);
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: 12px;
+      white-space: nowrap
+    }
+
+    .chips {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 4px 0 8px
+    }
+
+    .chips button {
+      flex: none;
+      background: #262b36;
+      color: var(--tx);
+      border: 0;
+      border-radius: 20px;
+      padding: 7px 13px;
+      font-size: 14px
+    }
+
+    .chips button.on {
+      background: var(--ac)
+    }
+
+    .hidden {
+      display: none
+    }
+
+    .det {
+      margin-top: 10px;
+      font-size: 15px
+    }
+
+    .det p {
+      margin: 6px 0
+    }
+
+    .login {
+      max-width: 380px;
+      margin: 0 auto;
+      padding: 60px 20px
+    }
+
+    .login h1 {
+      font-size: 30px;
+      margin: 0 0 6px
+    }
+
+    .ov {
+      position: fixed;
+      inset: 0;
+      background: #000a;
+      z-index: 20;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center
+    }
+
+    .sheet {
+      background: var(--bg);
+      border-radius: 18px 18px 0 0;
+      width: 100%;
+      max-width: 720px;
+      max-height: 90vh;
+      overflow: auto;
+      padding: 16px 16px 28px;
+      border: 1px solid var(--line)
+    }
+
+    .sheet h3 {
+      margin: 0 0 10px
+    }
+
+    .savebar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: calc(58px + env(safe-area-inset-bottom));
+      padding: 8px 14px;
+      background: linear-gradient(transparent, var(--bg) 40%);
+      z-index: 5;
+      max-width: 720px;
+      margin: 0 auto
+    }
+
+    .savebar .btn {
+      margin: 0
+    }
+
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: 110px;
+      transform: translateX(-50%);
+      background: #fff;
+      color: #000;
+      padding: 10px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      z-index: 40;
+      opacity: 0;
+      transition: .25s;
+      pointer-events: none;
+      max-width: 90%;
+      text-align: center
+    }
+
+    #toast.on {
+      opacity: 1
+    }
+
+    .chk {
+      width: 26px;
+      height: 26px;
+      accent-color: var(--ok);
+      margin: 0;
+      flex: none
+    }
+
+    .pill {
+      display: inline-block;
+      background: #262b36;
+      border-radius: 8px;
+      padding: 3px 9px;
+      margin: 2px 4px 2px 0;
+      font-size: 13px
+    }
+  </style>
 </head>
+
 <body>
-<div id="app"></div>
-<div id="modal"></div>
-<div id="toast"></div>
+  <div id="app"></div>
+  <div id="modal"></div>
+  <div id="toast"></div>
 
-<script type="module">
-import { initializeApp, deleteApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, doc, setDoc, addDoc, deleteDoc, onSnapshot, query, where, writeBatch, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  <script type="module">
+    import { initializeApp, deleteApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, collection, doc, setDoc, addDoc, deleteDoc, onSnapshot, query, where, writeBatch, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* =====================  CONFIGURAÇÃO (edite aqui)  ===================== */
-const CONFIG = {
-  personalEmail: "COLE_AQUI_O_SEU_EMAIL",   // o mesmo e-mail que você criou no Firebase Authentication
-  firebase: {
-    apiKey: "COLE_AQUI",
-    authDomain: "COLE_AQUI",
-    projectId: "COLE_AQUI",
-    storageBucket: "COLE_AQUI",
-    messagingSenderId: "COLE_AQUI",
-    appId: "COLE_AQUI"
-  }
-};
-/* ======================================================================= */
+    /* =====================  CONFIGURAÇÃO (edite aqui)  ===================== */
+    const CONFIG = {
+      personalEmail: "gustavoalencar.lobato@gmail.com",   // o e-mail que você criou em Authentication → Usuários
+      firebase: {
+        apiKey: "AIzaSyBIbvrCUTGELz73In-57M28ZA89p7692Vc",
+        authDomain: "meu-treino-57d35.firebaseapp.com",
+        projectId: "meu-treino-57d35",
+        storageBucket: "meu-treino-57d35.firebasestorage.app",
+        messagingSenderId: "114054010260",
+        appId: "1:114054010260:web:1b8f15a4a60e2ac8eb2b81"
+      }
+    };
+    /* ======================================================================= */
 
-const GROUPS=['Peito','Costas','Ombros','Bíceps','Tríceps','Antebraço','Quadríceps','Posterior de coxa','Glúteos','Panturrilha','Abdômen','Cardio','Funcional e mobilidade'];
+    const GROUPS = ['Peito', 'Costas', 'Ombros', 'Bíceps', 'Tríceps', 'Antebraço', 'Quadríceps', 'Posterior de coxa', 'Glúteos', 'Panturrilha', 'Abdômen', 'Cardio', 'Funcional e mobilidade'];
 
-const RAW=`Peito|Supino reto com barra|Barra e banco|Deite com pés firmes no chão e escápulas juntas. Desça a barra até a linha do peito e empurre até estender os braços sem travar os cotovelos.
+    const RAW = `Peito|Supino reto com barra|Barra e banco|Deite com pés firmes no chão e escápulas juntas. Desça a barra até a linha do peito e empurre até estender os braços sem travar os cotovelos.
 Peito|Supino inclinado com barra|Barra e banco inclinado|Banco a 30-45°. Desça a barra até a parte alta do peito e empurre para cima mantendo punhos alinhados com os cotovelos.
 Peito|Supino declinado com barra|Barra e banco declinado|Prenda os pés no apoio. Desça a barra até a parte baixa do peito e empurre de volta de forma controlada.
 Peito|Supino reto com halteres|Halteres e banco|Halteres na altura do peito, cotovelos a cerca de 45° do corpo. Empurre para cima aproximando os halteres sem bater um no outro.
@@ -199,304 +490,307 @@ Funcional e mobilidade|Alongamento de quadríceps|Peso do corpo|Em pé, segure o
 Funcional e mobilidade|Alongamento de posterior de coxa|Colchonete|Sentado, perna estendida, incline o tronco à frente com a coluna reta até sentir alongar. Segure 20-30 s.
 Funcional e mobilidade|Alongamento de peitoral na parede|Parede|Apoie o antebraço na parede e gire o tronco para o lado oposto até sentir alongar o peito. Segure 20-30 s.`;
 
-const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-const slug=s=>norm(s).replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const $=s=>document.querySelector(s);
-const BUILTIN=RAW.trim().split('\n').map(l=>{const [group,name,equip,instructions]=l.split('|');return {id:slug(name),group,name,equip,instructions,custom:false}});
+    const norm = s => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    const slug = s => norm(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const $ = s => document.querySelector(s);
+    const BUILTIN = RAW.trim().split('\n').map(l => { const [group, name, equip, instructions] = l.split('|'); return { id: slug(name), group, name, equip, instructions, custom: false } });
 
-const S={user:null,role:null,profile:null,profileLoaded:false,students:[],workouts:[],logs:[],over:{},cfg:{},view:'login',p:{},draft:null,unsubs:[],lq:'',lg:'',pq:'',pg:'',sess:{}};
+    const S = { user: null, role: null, profile: null, profileLoaded: false, students: [], workouts: [], logs: [], over: {}, cfg: {}, view: 'login', p: {}, draft: null, unsubs: [], lq: '', lg: '', pq: '', pg: '', sess: {} };
 
-function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),2600)}
-function modal(html){$('#modal').innerHTML=`<div class="ov" data-act="closeModal"><div class="sheet">${html}</div></div>`}
-function closeModal(){$('#modal').innerHTML=''}
+    function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 2600) }
+    function modal(html) { $('#modal').innerHTML = `<div class="ov" data-act="closeModal"><div class="sheet">${html}</div></div>` }
+    function closeModal() { $('#modal').innerHTML = '' }
 
-/* ---------- configuração pendente ---------- */
-const configured=!CONFIG.firebase.apiKey.startsWith('COLE')&&!CONFIG.personalEmail.startsWith('COLE');
-if(!configured){
-  $('#app').innerHTML=`<div class="login"><h1>⚙️ Falta configurar</h1><p class="muted">Abra o arquivo <b>index.html</b>, procure o bloco <b>CONFIGURAÇÃO</b> no começo do script e cole os dados do seu projeto Firebase e o seu e-mail de personal. O passo a passo está no arquivo README.md.</p></div>`;
-  throw new Error('Firebase não configurado');
-}
-const fbApp=initializeApp(CONFIG.firebase);
-const auth=getAuth(fbApp);
-const db=getFirestore(fbApp);
+    /* ---------- configuração pendente ---------- */
+    const configured = !CONFIG.firebase.apiKey.startsWith('COLE') && !CONFIG.personalEmail.startsWith('COLE');
+    if (!configured) {
+      $('#app').innerHTML = `<div class="login"><h1>⚙️ Falta configurar</h1><p class="muted">Abra o arquivo <b>index.html</b>, procure o bloco <b>CONFIGURAÇÃO</b> no começo do script e cole os dados do seu projeto Firebase e o seu e-mail de personal. O passo a passo está no arquivo README.md.</p></div>`;
+      throw new Error('Firebase não configurado');
+    }
+    const fbApp = initializeApp(CONFIG.firebase);
+    const auth = getAuth(fbApp);
+    const db = getFirestore(fbApp);
 
-/* ---------- biblioteca ---------- */
-function getLib(){
-  const list=BUILTIN.map(b=>{const o=S.over[b.id]||{};return {...b,equip:o.equip??b.equip,instructions:o.instructions??b.instructions,video:o.video||'',overridden:!!S.over[b.id]}});
-  Object.values(S.over).forEach(o=>{if(o.custom)list.push({...o,video:o.video||''})});
-  return list.sort((a,b)=>a.name.localeCompare(b.name,'pt-BR'));
-}
-const libMap=()=>Object.fromEntries(getLib().map(e=>[e.id,e]));
-const ytLink=n=>`https://www.youtube.com/results?search_query=${encodeURIComponent('como fazer '+n+' execução correta')}`;
-function waLink(text){const n=String(S.cfg.whatsapp||'').replace(/\D/g,'');return n?`https://wa.me/${n}?text=${encodeURIComponent(text)}`:null}
+    /* ---------- biblioteca ---------- */
+    function getLib() {
+      const list = BUILTIN.map(b => { const o = S.over[b.id] || {}; return { ...b, equip: o.equip ?? b.equip, instructions: o.instructions ?? b.instructions, video: o.video || '', overridden: !!S.over[b.id] } });
+      Object.values(S.over).forEach(o => { if (o.custom) list.push({ ...o, video: o.video || '' }) });
+      return list.sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+    }
+    const libMap = () => Object.fromEntries(getLib().map(e => [e.id, e]));
+    const ytLink = n => `https://www.youtube.com/results?search_query=${encodeURIComponent('como fazer ' + n + ' execução correta')}`;
+    function waLink(text) { const n = String(S.cfg.whatsapp || '').replace(/\D/g, ''); return n ? `https://wa.me/${n}?text=${encodeURIComponent(text)}` : null }
 
-/* ---------- dados em tempo real ---------- */
-function listen(){
-  const u=S.unsubs;const err=e=>{console.error(e);toast('Erro ao carregar dados ('+(e.code||'')+')')};
-  u.push(onSnapshot(collection(db,'exercises'),s=>{S.over={};s.forEach(d=>S.over[d.id]={...d.data(),id:d.id});render()},err));
-  u.push(onSnapshot(doc(db,'config','main'),s=>{S.cfg=s.data()||{};render()},err));
-  if(S.role==='personal'){
-    u.push(onSnapshot(collection(db,'students'),s=>{S.students=s.docs.map(d=>({...d.data(),id:d.id}));render()},err));
-    u.push(onSnapshot(collection(db,'workouts'),s=>{S.workouts=s.docs.map(d=>({...d.data(),id:d.id}));render()},err));
-    u.push(onSnapshot(collection(db,'logs'),s=>{S.logs=s.docs.map(d=>({...d.data(),id:d.id}));render()},err));
-  }else{
-    const uid=S.user.uid;
-    u.push(onSnapshot(doc(db,'students',uid),s=>{S.profile=s.exists()?{...s.data(),id:s.id}:null;S.profileLoaded=true;render()},err));
-    u.push(onSnapshot(query(collection(db,'workouts'),where('studentId','==',uid)),s=>{S.workouts=s.docs.map(d=>({...d.data(),id:d.id}));render()},err));
-    u.push(onSnapshot(query(collection(db,'logs'),where('studentId','==',uid)),s=>{S.logs=s.docs.map(d=>({...d.data(),id:d.id}));render()},err));
-  }
-}
-onAuthStateChanged(auth,u=>{
-  S.unsubs.forEach(f=>f());S.unsubs=[];S.user=u;S.profile=null;S.profileLoaded=false;
-  if(!u){S.role=null;S.view='login';render(true);return}
-  S.role=u.email.toLowerCase()===CONFIG.personalEmail.toLowerCase()?'personal':'student';
-  S.view=S.role==='personal'?'students':'home';
-  listen();render(true);
-});
+    /* ---------- dados em tempo real ---------- */
+    function listen() {
+      const u = S.unsubs; const err = e => { console.error(e); toast('Erro ao carregar dados (' + (e.code || '') + ')') };
+      u.push(onSnapshot(collection(db, 'exercises'), s => { S.over = {}; s.forEach(d => S.over[d.id] = { ...d.data(), id: d.id }); render() }, err));
+      u.push(onSnapshot(doc(db, 'config', 'main'), s => { S.cfg = s.data() || {}; render() }, err));
+      if (S.role === 'personal') {
+        u.push(onSnapshot(collection(db, 'students'), s => { S.students = s.docs.map(d => ({ ...d.data(), id: d.id })); render() }, err));
+        u.push(onSnapshot(collection(db, 'workouts'), s => { S.workouts = s.docs.map(d => ({ ...d.data(), id: d.id })); render() }, err));
+        u.push(onSnapshot(collection(db, 'logs'), s => { S.logs = s.docs.map(d => ({ ...d.data(), id: d.id })); render() }, err));
+      } else {
+        const uid = S.user.uid;
+        u.push(onSnapshot(doc(db, 'students', uid), s => { S.profile = s.exists() ? { ...s.data(), id: s.id } : null; S.profileLoaded = true; render() }, err));
+        u.push(onSnapshot(query(collection(db, 'workouts'), where('studentId', '==', uid)), s => { S.workouts = s.docs.map(d => ({ ...d.data(), id: d.id })); render() }, err));
+        u.push(onSnapshot(query(collection(db, 'logs'), where('studentId', '==', uid)), s => { S.logs = s.docs.map(d => ({ ...d.data(), id: d.id })); render() }, err));
+      }
+    }
+    onAuthStateChanged(auth, u => {
+      S.unsubs.forEach(f => f()); S.unsubs = []; S.user = u; S.profile = null; S.profileLoaded = false;
+      if (!u) { S.role = null; S.view = 'login'; render(true); return }
+      S.role = u.email.toLowerCase() === CONFIG.personalEmail.toLowerCase() ? 'personal' : 'student';
+      S.view = S.role === 'personal' ? 'students' : 'home';
+      listen(); render(true);
+    });
 
-/* ---------- layout ---------- */
-function shell(title,body,back){
-  const pers=S.role==='personal';
-  const items=pers?[['students','🧑‍🤝‍🧑','Alunos'],['library','📚','Exercícios'],['settings','⚙️','Ajustes']]:[['home','🏋️','Treinos'],['history','📈','Histórico']];
-  const cur=({student:'students',wedit:'students',sworkout:'home'})[S.view]||S.view;
-  return `<header>${back?`<button class="ico" data-act="go" data-v="${back.v}" data-id="${back.id||''}">‹</button>`:''}<h2>${esc(title)}</h2></header><main>${body}</main>
-  <nav>${items.map(i=>`<button class="${cur===i[0]?'on':''}" data-act="go" data-v="${i[0]}"><span>${i[1]}</span>${i[2]}</button>`).join('')}</nav>`;
-}
-function go(v,p){
-  S.view=v;S.p=p||{};
-  if(v==='wedit'){const w=S.workouts.find(x=>x.id===S.p.id);if(w)S.draft=JSON.parse(JSON.stringify(w))}
-  render(true);window.scrollTo(0,0);
-}
-function render(force){
-  const a=document.activeElement;
-  if(!force&&a&&a.matches&&a.matches('#app input,#app textarea,#app select'))return;
-  const app=$('#app');
-  if(!S.user){app.innerHTML=loginView();return}
-  if(S.role==='student'&&S.profileLoaded&&!S.profile){app.innerHTML=shell('Conta sem cadastro','<p class="muted">Seu cadastro não foi encontrado. Fale com seu personal.</p><button class="btn sec" data-act="logout">Sair</button>');return}
-  app.innerHTML=(views[S.view]||views.students)();
-}
-function loginView(){return `<div class="login"><h1>💪 Meu Treino</h1><p class="muted">Entre com o login que seu personal criou.</p>
+    /* ---------- layout ---------- */
+    function shell(title, body, back) {
+      const pers = S.role === 'personal';
+      const items = pers ? [['students', '🧑‍🤝‍🧑', 'Alunos'], ['library', '📚', 'Exercícios'], ['settings', '⚙️', 'Ajustes']] : [['home', '🏋️', 'Treinos'], ['history', '📈', 'Histórico']];
+      const cur = ({ student: 'students', wedit: 'students', sworkout: 'home' })[S.view] || S.view;
+      return `<header>${back ? `<button class="ico" data-act="go" data-v="${back.v}" data-id="${back.id || ''}">‹</button>` : ''}<h2>${esc(title)}</h2></header><main>${body}</main>
+  <nav>${items.map(i => `<button class="${cur === i[0] ? 'on' : ''}" data-act="go" data-v="${i[0]}"><span>${i[1]}</span>${i[2]}</button>`).join('')}</nav>`;
+    }
+    function go(v, p) {
+      S.view = v; S.p = p || {};
+      if (v === 'wedit') { const w = S.workouts.find(x => x.id === S.p.id); if (w) S.draft = JSON.parse(JSON.stringify(w)) }
+      render(true); window.scrollTo(0, 0);
+    }
+    function render(force) {
+      const a = document.activeElement;
+      if (!force && a && a.matches && a.matches('#app input,#app textarea,#app select')) return;
+      const app = $('#app');
+      if (!S.user) { app.innerHTML = loginView(); return }
+      if (S.role === 'student' && S.profileLoaded && !S.profile) { app.innerHTML = shell('Conta sem cadastro', '<p class="muted">Seu cadastro não foi encontrado. Fale com seu personal.</p><button class="btn sec" data-act="logout">Sair</button>'); return }
+      app.innerHTML = (views[S.view] || views.students)();
+    }
+    function loginView() {
+      return `<div class="login"><h1>💪 Meu Treino</h1><p class="muted">Entre com o login que seu personal criou.</p>
 <label>Login ou e-mail</label><input id="lg" autocapitalize="none" autocomplete="username" placeholder="ex: joao.silva">
 <label>Senha</label><input id="pw" type="password" autocomplete="current-password" placeholder="Sua senha">
 <button class="btn" data-act="login">Entrar</button><button class="link" data-act="forgot">Esqueci a senha</button></div>`}
 
-/* ---------- componentes ---------- */
-function exDetail(e,ex){
-  const vid=ex.video||ytLink(e.name);
-  return `<p><b>Como fazer:</b> ${esc(ex.instructions||'Sem instruções cadastradas.')}</p>${ex.equip?`<p class="muted">Equipamento: ${esc(ex.equip)}</p>`:''}`;
-}
-function pills(e){return [e.sets?`<span class="pill">${esc(e.sets)} séries</span>`:'',e.reps?`<span class="pill">${esc(e.reps)} reps</span>`:'',e.load?`<span class="pill">${esc(e.load)}</span>`:'',e.rest?`<span class="pill">⏱ ${esc(e.rest)}</span>`:''].join('')}
-function groupChips(act,cur){return `<div class="chips"><button class="${!cur?'on':''}" data-act="${act}" data-g="">Todos</button>${GROUPS.map(g=>`<button class="${cur===g?'on':''}" data-act="${act}" data-g="${esc(g)}">${esc(g)}</button>`).join('')}</div>`}
-const fmt=d=>{try{return new Date(d).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'})}catch{return ''}};
-function logCard(l){
-  const done=(l.entries||[]).filter(x=>x.done).length;
-  return `<div class="card click" data-act="toggle"><div class="row"><b class="grow">${esc(l.workoutName)}</b><span class="tag">${done}/${(l.entries||[]).length}</span></div><div class="muted">${fmt(l.date)}</div>
-  <div class="det hidden">${(l.entries||[]).map(x=>`<div>${x.done?'✅':'⬜'} ${esc(x.name)}${x.load?` — <b>${esc(x.load)}</b>`:''}</div>`).join('')}</div></div>`;
-}
+    /* ---------- componentes ---------- */
+    function exDetail(e, ex) {
+      const vid = ex.video || ytLink(e.name);
+      return `<p><b>Como fazer:</b> ${esc(ex.instructions || 'Sem instruções cadastradas.')}</p>${ex.equip ? `<p class="muted">Equipamento: ${esc(ex.equip)}</p>` : ''}`;
+    }
+    function pills(e) { return [e.sets ? `<span class="pill">${esc(e.sets)} séries</span>` : '', e.reps ? `<span class="pill">${esc(e.reps)} reps</span>` : '', e.load ? `<span class="pill">${esc(e.load)}</span>` : '', e.rest ? `<span class="pill">⏱ ${esc(e.rest)}</span>` : ''].join('') }
+    function groupChips(act, cur) { return `<div class="chips"><button class="${!cur ? 'on' : ''}" data-act="${act}" data-g="">Todos</button>${GROUPS.map(g => `<button class="${cur === g ? 'on' : ''}" data-act="${act}" data-g="${esc(g)}">${esc(g)}</button>`).join('')}</div>` }
+    const fmt = d => { try { return new Date(d).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) } catch { return '' } };
+    function logCard(l) {
+      const done = (l.entries || []).filter(x => x.done).length;
+      return `<div class="card click" data-act="toggle"><div class="row"><b class="grow">${esc(l.workoutName)}</b><span class="tag">${done}/${(l.entries || []).length}</span></div><div class="muted">${fmt(l.date)}</div>
+  <div class="det hidden">${(l.entries || []).map(x => `<div>${x.done ? '✅' : '⬜'} ${esc(x.name)}${x.load ? ` — <b>${esc(x.load)}</b>` : ''}</div>`).join('')}</div></div>`;
+    }
 
-/* ---------- telas ---------- */
-const views={
-  students(){
-    const list=[...S.students].sort((a,b)=>a.name.localeCompare(b.name,'pt-BR'));
-    return shell('Meus alunos',`<button class="btn" data-act="newStudent">+ Novo aluno</button>`+(list.length?list.map(s=>`<div class="card click" data-act="go" data-v="student" data-id="${s.id}"><b>${esc(s.name)}</b><div class="muted">${esc(s.goal||'Sem objetivo definido')} · ${S.workouts.filter(w=>w.studentId===s.id).length} treinos</div></div>`).join(''):'<p class="muted">Nenhum aluno ainda. Toque em “+ Novo aluno”.</p>'));
-  },
-  student(){
-    const s=S.students.find(x=>x.id===S.p.id);
-    if(!s)return shell('Aluno','<p class="muted">Aluno não encontrado.</p>',{v:'students'});
-    const ws=S.workouts.filter(w=>w.studentId===s.id).sort((a,b)=>(a.order||0)-(b.order||0));
-    const ls=S.logs.filter(l=>l.studentId===s.id).sort((a,b)=>String(b.date).localeCompare(String(a.date))).slice(0,15);
-    return shell(s.name,`<div class="card"><div class="muted">Login: <b>${esc(s.login)}</b></div><div>${esc(s.goal||'')}</div>${s.notes?`<div class="muted">${esc(s.notes)}</div>`:''}
+    /* ---------- telas ---------- */
+    const views = {
+      students() {
+        const list = [...S.students].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+        return shell('Meus alunos', `<button class="btn" data-act="newStudent">+ Novo aluno</button>` + (list.length ? list.map(s => `<div class="card click" data-act="go" data-v="student" data-id="${s.id}"><b>${esc(s.name)}</b><div class="muted">${esc(s.goal || 'Sem objetivo definido')} · ${S.workouts.filter(w => w.studentId === s.id).length} treinos</div></div>`).join('') : '<p class="muted">Nenhum aluno ainda. Toque em “+ Novo aluno”.</p>'));
+      },
+      student() {
+        const s = S.students.find(x => x.id === S.p.id);
+        if (!s) return shell('Aluno', '<p class="muted">Aluno não encontrado.</p>', { v: 'students' });
+        const ws = S.workouts.filter(w => w.studentId === s.id).sort((a, b) => (a.order || 0) - (b.order || 0));
+        const ls = S.logs.filter(l => l.studentId === s.id).sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 15);
+        return shell(s.name, `<div class="card"><div class="muted">Login: <b>${esc(s.login)}</b></div><div>${esc(s.goal || '')}</div>${s.notes ? `<div class="muted">${esc(s.notes)}</div>` : ''}
     <button class="btn sec sm" data-act="editStudent" data-id="${s.id}">Editar dados</button><button class="btn red sm" data-act="delStudent" data-id="${s.id}">Excluir aluno</button></div>
     <h3>Treinos</h3><button class="btn" data-act="newWorkout" data-id="${s.id}">+ Novo treino</button>
-    ${ws.map(w=>`<div class="card"><b>${esc(w.name)}</b><div class="muted">${(w.exercises||[]).length} exercícios</div>
-    <button class="btn sm" data-act="go" data-v="wedit" data-id="${w.id}">Editar</button><button class="btn sec sm" data-act="dupWorkout" data-id="${w.id}">Copiar</button><button class="btn red sm" data-act="delWorkout" data-id="${w.id}">Excluir</button></div>`).join('')||'<p class="muted">Nenhum treino ainda.</p>'}
-    <h3>Últimos treinos feitos</h3>${ls.map(logCard).join('')||'<p class="muted">Ainda sem registros.</p>'}`,{v:'students'});
-  },
-  wedit(){
-    const d=S.draft;if(!d)return views.students();
-    return shell('Editar treino',`<label>Nome do treino</label><input id="wname" value="${esc(d.name)}" placeholder="Ex: Treino A - Bíceps e costas">
-    ${d.exercises.map((e,i)=>`<div class="card"><div class="row"><b class="grow">${i+1}. ${esc(e.name)}</b><button class="ico sm" data-act="mv" data-i="${i}" data-d="-1">↑</button><button class="ico sm" data-act="mv" data-i="${i}" data-d="1">↓</button><button class="ico sm" data-act="rm" data-i="${i}">✕</button></div>
+    ${ws.map(w => `<div class="card"><b>${esc(w.name)}</b><div class="muted">${(w.exercises || []).length} exercícios</div>
+    <button class="btn sm" data-act="go" data-v="wedit" data-id="${w.id}">Editar</button><button class="btn sec sm" data-act="dupWorkout" data-id="${w.id}">Copiar</button><button class="btn red sm" data-act="delWorkout" data-id="${w.id}">Excluir</button></div>`).join('') || '<p class="muted">Nenhum treino ainda.</p>'}
+    <h3>Últimos treinos feitos</h3>${ls.map(logCard).join('') || '<p class="muted">Ainda sem registros.</p>'}`, { v: 'students' });
+      },
+      wedit() {
+        const d = S.draft; if (!d) return views.students();
+        return shell('Editar treino', `<label>Nome do treino</label><input id="wname" value="${esc(d.name)}" placeholder="Ex: Treino A - Bíceps e costas">
+    ${d.exercises.map((e, i) => `<div class="card"><div class="row"><b class="grow">${i + 1}. ${esc(e.name)}</b><button class="ico sm" data-act="mv" data-i="${i}" data-d="-1">↑</button><button class="ico sm" data-act="mv" data-i="${i}" data-d="1">↓</button><button class="ico sm" data-act="rm" data-i="${i}">✕</button></div>
     <div class="grid4"><div><label>Séries</label><input data-i="${i}" data-f="sets" inputmode="numeric" value="${esc(e.sets)}"></div><div><label>Reps</label><input data-i="${i}" data-f="reps" value="${esc(e.reps)}"></div><div><label>Carga</label><input data-i="${i}" data-f="load" value="${esc(e.load)}" placeholder="kg"></div><div><label>Desc.</label><input data-i="${i}" data-f="rest" value="${esc(e.rest)}"></div></div>
-    <label>Observação para o aluno</label><textarea data-i="${i}" data-f="note" rows="2">${esc(e.note)}</textarea></div>`).join('')||'<p class="muted">Nenhum exercício ainda.</p>'}
+    <label>Observação para o aluno</label><textarea data-i="${i}" data-f="note" rows="2">${esc(e.note)}</textarea></div>`).join('') || '<p class="muted">Nenhum exercício ainda.</p>'}
     <button class="btn sec" data-act="openPicker">+ Adicionar exercício</button>
-    <div class="savebar"><button class="btn" data-act="saveWorkout">Salvar treino</button></div>`,{v:'student',id:d.studentId});
-  },
-  library(){
-    return shell('Exercícios',`<input id="lq" placeholder="Buscar exercício..." value="${esc(S.lq)}">${groupChips('lgrp',S.lg)}<button class="btn sec" data-act="newEx">+ Novo exercício</button><div id="liblist">${libList()}</div>`);
-  },
-  settings(){
-    return shell('Ajustes',`<div class="card"><label>Seu nome (aparece para os alunos)</label><input id="cname" value="${esc(S.cfg.personalName||'')}">
-    <label>Seu WhatsApp com DDI e DDD, só números</label><input id="cwa" inputmode="numeric" placeholder="5591999999999" value="${esc(S.cfg.whatsapp||'')}">
+    <div class="savebar"><button class="btn" data-act="saveWorkout">Salvar treino</button></div>`, { v: 'student', id: d.studentId });
+      },
+      library() {
+        return shell('Exercícios', `<input id="lq" placeholder="Buscar exercício..." value="${esc(S.lq)}">${groupChips('lgrp', S.lg)}<button class="btn sec" data-act="newEx">+ Novo exercício</button><div id="liblist">${libList()}</div>`);
+      },
+      settings() {
+        return shell('Ajustes', `<div class="card"><label>Seu nome (aparece para os alunos)</label><input id="cname" value="${esc(S.cfg.personalName || '')}">
+    <label>Seu WhatsApp com DDI e DDD, só números</label><input id="cwa" inputmode="numeric" placeholder="5591999999999" value="${esc(S.cfg.whatsapp || '')}">
     <button class="btn" data-act="saveCfg">Salvar</button></div><button class="btn sec" data-act="logout">Sair da conta</button>`);
-  },
-  home(){
-    const ws=[...S.workouts].sort((a,b)=>(a.order||0)-(b.order||0));
-    const wl=waLink(`Oi ${S.cfg.personalName||''}! Aqui é ${S.profile?S.profile.name:''}.`);
-    return shell(`Olá, ${(S.profile&&S.profile.name||'').split(' ')[0]} 👋`,`${S.profile&&S.profile.goal?`<p class="muted">Objetivo: ${esc(S.profile.goal)}</p>`:''}
-    ${ws.map(w=>`<div class="card click" data-act="go" data-v="sworkout" data-id="${w.id}"><b>${esc(w.name)}</b><div class="muted">${(w.exercises||[]).length} exercícios</div></div>`).join('')||'<p class="muted">Seu personal ainda não montou seu treino.</p>'}
-    ${wl?`<a class="btn sec" target="_blank" rel="noopener" href="${wl}">💬 Falar com meu personal</a>`:''}
+      },
+      home() {
+        const ws = [...S.workouts].sort((a, b) => (a.order || 0) - (b.order || 0));
+        const wl = waLink(`Oi ${S.cfg.personalName || ''}! Aqui é ${S.profile ? S.profile.name : ''}.`);
+        return shell(`Olá, ${(S.profile && S.profile.name || '').split(' ')[0]} 👋`, `${S.profile && S.profile.goal ? `<p class="muted">Objetivo: ${esc(S.profile.goal)}</p>` : ''}
+    ${ws.map(w => `<div class="card click" data-act="go" data-v="sworkout" data-id="${w.id}"><b>${esc(w.name)}</b><div class="muted">${(w.exercises || []).length} exercícios</div></div>`).join('') || '<p class="muted">Seu personal ainda não montou seu treino.</p>'}
+    ${wl ? `<a class="btn sec" target="_blank" rel="noopener" href="${wl}">💬 Falar com meu personal</a>` : ''}
     <button class="link" data-act="logout">Sair</button>`);
-  },
-  sworkout(){
-    const w=S.workouts.find(x=>x.id===S.p.id);if(!w)return views.home();
-    const ss=getSess(w.id),L=libMap();
-    return shell(w.name,w.exercises.map((e,i)=>{
-      const ex=L[e.key]||{},s=ss[i]||{},vid=ex.video||ytLink(e.name);
-      const wl=waLink(`Oi ${S.cfg.personalName||''}! Sou ${S.profile.name}. Tenho uma dúvida no exercício "${e.name}" do treino "${w.name}".`);
-      return `<div class="card ${s.done?'done':''}"><div class="row"><input type="checkbox" class="chk" data-act="chk" data-i="${i}" ${s.done?'checked':''}><b class="grow">${esc(e.name)}</b><span class="tag">${esc(e.group||'')}</span></div>
-      <div style="margin-top:6px">${pills(e)}</div>${e.note?`<div class="muted">📝 ${esc(e.note)}</div>`:''}
-      <label style="margin-top:8px">Carga que usei hoje</label><input data-sf="load" data-i="${i}" value="${esc(s.load||'')}" placeholder="Ex: 20kg">
-      <button class="btn sec sm" data-act="toggle">ℹ️ Como fazer</button><a class="btn sec sm" target="_blank" rel="noopener" href="${esc(vid)}">▶ Ver execução</a>${wl?`<a class="btn sec sm" target="_blank" rel="noopener" href="${wl}">💬 Tirar dúvida</a>`:''}
-      <div class="det hidden">${exDetail(e,ex)}</div></div>`}).join('')+`<button class="btn" data-act="finish" data-id="${w.id}">✅ Finalizar treino</button>`,{v:'home'});
-  },
-  history(){
-    const ls=[...S.logs].sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-    return shell('Histórico',ls.map(logCard).join('')||'<p class="muted">Você ainda não finalizou nenhum treino.</p>');
-  }
-};
-function libList(){
-  const q=norm(S.lq);
-  const l=getLib().filter(e=>(!S.lg||e.group===S.lg)&&(!q||norm(e.name).includes(q)));
-  return l.map(e=>`<div class="card click" data-act="toggle"><div class="row"><b class="grow">${esc(e.name)}</b><span class="tag">${esc(e.group)}</span></div>
-  <div class="det hidden"><p>${esc(e.instructions||'')}</p><p class="muted">${esc(e.equip||'')}</p><p class="muted">Vídeo: ${e.video?'seu link cadastrado':'busca automática no YouTube'}</p>
-  <a class="btn sec sm" target="_blank" rel="noopener" href="${esc(e.video||ytLink(e.name))}">▶ Ver vídeo</a><button class="btn sm" data-act="editEx" data-id="${esc(e.id)}">Editar</button></div></div>`).join('')||'<p class="muted">Nada encontrado.</p>';
-}
-
-/* ---------- sessão do aluno (treino em andamento) ---------- */
-function getSess(id){if(!S.sess[id]){try{S.sess[id]=JSON.parse(localStorage.getItem('sess_'+id)||'{}')}catch{S.sess[id]={}}}return S.sess[id]}
-function saveSess(id){try{localStorage.setItem('sess_'+id,JSON.stringify(S.sess[id]))}catch{}}
-
-/* ---------- seletor de exercícios ---------- */
-function openPicker(){S.pq='';S.pg='';modal(`<h3>Adicionar exercício</h3><input id="pq" placeholder="Buscar..."><div id="pchips"></div><div id="plist"></div><button class="btn" data-act="closeModal">Concluir</button>`);renderPicker()}
-function renderPicker(){
-  const q=norm(S.pq);
-  $('#pchips').innerHTML=groupChips('pgrp',S.pg);
-  $('#plist').innerHTML=getLib().filter(e=>(!S.pg||e.group===S.pg)&&(!q||norm(e.name).includes(q))).map(e=>`<div class="card click" data-act="pick" data-id="${esc(e.id)}"><div class="row"><b class="grow">${esc(e.name)}</b><span class="tag">${esc(e.group)}</span></div></div>`).join('')||'<p class="muted">Nada encontrado.</p>';
-}
-
-/* ---------- ações ---------- */
-async function doLogin(){
-  const l=$('#lg').value.trim().toLowerCase(),pw=$('#pw').value;if(!l||!pw)return toast('Preencha login e senha');
-  try{await signInWithEmailAndPassword(auth,l.includes('@')?l:l+'@aluno.fit',pw)}catch(e){toast('Login ou senha incorretos')}
-}
-function studentForm(s){
-  s=s||{};
-  return `<h3>${s.id?'Editar aluno':'Novo aluno'}</h3><label>Nome</label><input id="sn" value="${esc(s.name||'')}">
-  ${s.id?'':`<label>Login (sem espaços, ex: maria.souza) ou e-mail</label><input id="sl" autocapitalize="none"><label>Senha (mínimo 6 caracteres)</label><input id="sp" type="text" autocapitalize="none">`}
-  <label>Objetivo</label><input id="sg" value="${esc(s.goal||'')}" placeholder="Ex: hipertrofia, emagrecimento"><label>Observações (lesões, rotina...)</label><textarea id="so" rows="3">${esc(s.notes||'')}</textarea>
-  <button class="btn" data-act="saveStudent" data-id="${s.id||''}">Salvar</button><button class="btn sec" data-act="closeModal">Cancelar</button>`;
-}
-async function createStudent(){
-  const name=$('#sn').value.trim(),login=$('#sl').value.trim().toLowerCase(),pw=$('#sp').value,goal=$('#sg').value.trim(),notes=$('#so').value.trim();
-  if(!name)return toast('Informe o nome');
-  if(!login.includes('@')&&!/^[a-z0-9._-]{3,}$/.test(login))return toast('Login: use letras minúsculas, números, ponto ou traço (mín. 3)');
-  if(pw.length<6)return toast('Senha com no mínimo 6 caracteres');
-  const email=login.includes('@')?login:login+'@aluno.fit';
-  const sec=initializeApp(CONFIG.firebase,'sec'+Date.now()),sa=getAuth(sec);let uid;
-  try{
-    try{uid=(await createUserWithEmailAndPassword(sa,email,pw)).user.uid}
-    catch(e){
-      if(e.code==='auth/email-already-in-use'){try{uid=(await signInWithEmailAndPassword(sa,email,pw)).user.uid}catch{return toast('Esse login já existe com outra senha. Use outro login.')}}
-      else return toast('Erro ao criar login: '+(e.code||''));
+      },
+      sworkout() {
+        const w = S.workouts.find(x => x.id === S.p.id); if (!w) return views.home();
+        const ss = getSess(w.id), L = libMap();
+        return shell(w.name, w.exercises.map((e, i) => {
+          const ex = L[e.key] || {}, s = ss[i] || {}, vid = ex.video || ytLink(e.name);
+          const wl = waLink(`Oi ${S.cfg.personalName || ''}! Sou ${S.profile.name}. Tenho uma dúvida no exercício "${e.name}" do treino "${w.name}".`);
+          return `<div class="card ${s.done ? 'done' : ''}"><div class="row"><input type="checkbox" class="chk" data-act="chk" data-i="${i}" ${s.done ? 'checked' : ''}><b class="grow">${esc(e.name)}</b><span class="tag">${esc(e.group || '')}</span></div>
+      <div style="margin-top:6px">${pills(e)}</div>${e.note ? `<div class="muted">📝 ${esc(e.note)}</div>` : ''}
+      <label style="margin-top:8px">Carga que usei hoje</label><input data-sf="load" data-i="${i}" value="${esc(s.load || '')}" placeholder="Ex: 20kg">
+      <button class="btn sec sm" data-act="toggle">ℹ️ Como fazer</button><a class="btn sec sm" target="_blank" rel="noopener" href="${esc(vid)}">▶ Ver execução</a>${wl ? `<a class="btn sec sm" target="_blank" rel="noopener" href="${wl}">💬 Tirar dúvida</a>` : ''}
+      <div class="det hidden">${exDetail(e, ex)}</div></div>`
+        }).join('') + `<button class="btn" data-act="finish" data-id="${w.id}">✅ Finalizar treino</button>`, { v: 'home' });
+      },
+      history() {
+        const ls = [...S.logs].sort((a, b) => String(b.date).localeCompare(String(a.date)));
+        return shell('Histórico', ls.map(logCard).join('') || '<p class="muted">Você ainda não finalizou nenhum treino.</p>');
+      }
+    };
+    function libList() {
+      const q = norm(S.lq);
+      const l = getLib().filter(e => (!S.lg || e.group === S.lg) && (!q || norm(e.name).includes(q)));
+      return l.map(e => `<div class="card click" data-act="toggle"><div class="row"><b class="grow">${esc(e.name)}</b><span class="tag">${esc(e.group)}</span></div>
+  <div class="det hidden"><p>${esc(e.instructions || '')}</p><p class="muted">${esc(e.equip || '')}</p><p class="muted">Vídeo: ${e.video ? 'seu link cadastrado' : 'busca automática no YouTube'}</p>
+  <a class="btn sec sm" target="_blank" rel="noopener" href="${esc(e.video || ytLink(e.name))}">▶ Ver vídeo</a><button class="btn sm" data-act="editEx" data-id="${esc(e.id)}">Editar</button></div></div>`).join('') || '<p class="muted">Nada encontrado.</p>';
     }
-    await signOut(sa);
-    await setDoc(doc(db,'students',uid),{name,login,goal,notes,createdAt:serverTimestamp()});
-    closeModal();toast('Aluno criado! Passe o login e a senha para ele.');
-  }finally{deleteApp(sec).catch(()=>{})}
-}
-const actions={
-  login:doLogin,
-  forgot:async()=>{const l=($('#lg').value||'').trim().toLowerCase();if(!l.includes('@'))return toast('Digite seu e-mail no campo de login para receber o link');try{await sendPasswordResetEmail(auth,l);toast('Enviamos um e-mail de redefinição')}catch{toast('Não foi possível enviar')}},
-  logout:()=>signOut(auth),
-  go:t=>go(t.dataset.v,{id:t.dataset.id}),
-  closeModal:(t,e)=>{if(t.classList.contains('ov')&&e.target!==t)return;closeModal()},
-  toggle:(t,e)=>{if(e.target.closest('a,button.btn:not([data-act=toggle]),input'))return;const c=t.closest('.card');const d=c.querySelector('.det');if(d)d.classList.toggle('hidden')},
-  newStudent:()=>modal(studentForm()),
-  editStudent:t=>modal(studentForm(S.students.find(x=>x.id===t.dataset.id))),
-  saveStudent:async t=>{
-    if(!t.dataset.id)return createStudent();
-    const name=$('#sn').value.trim();if(!name)return toast('Informe o nome');
-    await setDoc(doc(db,'students',t.dataset.id),{name,goal:$('#sg').value.trim(),notes:$('#so').value.trim()},{merge:true});closeModal();toast('Salvo');
-  },
-  delStudent:async t=>{
-    if(!confirm('Excluir este aluno e todos os treinos e registros dele?'))return;
-    const id=t.dataset.id,b=writeBatch(db);
-    S.workouts.filter(w=>w.studentId===id).forEach(w=>b.delete(doc(db,'workouts',w.id)));
-    S.logs.filter(l=>l.studentId===id).forEach(l=>b.delete(doc(db,'logs',l.id)));
-    b.delete(doc(db,'students',id));await b.commit();go('students');toast('Aluno excluído');
-  },
-  newWorkout:t=>modal(`<h3>Novo treino</h3><label>Nome</label><input id="wn" value="Treino A" placeholder="Ex: Treino de bíceps"><button class="btn" data-act="createWorkout" data-id="${t.dataset.id}">Criar e adicionar exercícios</button><button class="btn sec" data-act="closeModal">Cancelar</button>`),
-  createWorkout:async t=>{
-    const name=$('#wn').value.trim()||'Treino',studentId=t.dataset.id,order=Date.now();
-    const ref=await addDoc(collection(db,'workouts'),{studentId,name,exercises:[],order,createdAt:serverTimestamp()});
-    closeModal();S.draft={id:ref.id,studentId,name,exercises:[],order};S.view='wedit';S.p={id:ref.id};render(true);window.scrollTo(0,0);
-  },
-  delWorkout:async t=>{if(confirm('Excluir este treino?')){await deleteDoc(doc(db,'workouts',t.dataset.id));toast('Treino excluído')}},
-  dupWorkout:t=>{
-    const opts=[...S.students].sort((a,b)=>a.name.localeCompare(b.name,'pt-BR')).map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
-    modal(`<h3>Copiar treino para</h3><select id="dto">${opts}</select><button class="btn" data-act="doDup" data-id="${t.dataset.id}">Copiar</button><button class="btn sec" data-act="closeModal">Cancelar</button>`);
-  },
-  doDup:async t=>{
-    const w=S.workouts.find(x=>x.id===t.dataset.id);if(!w)return;
-    await addDoc(collection(db,'workouts'),{studentId:$('#dto').value,name:w.name,exercises:w.exercises,order:Date.now(),createdAt:serverTimestamp()});closeModal();toast('Treino copiado');
-  },
-  openPicker,
-  pick:t=>{
-    const e=libMap()[t.dataset.id];if(!e||!S.draft)return;
-    const cardio=e.group==='Cardio';
-    S.draft.exercises.push({key:e.id,name:e.name,group:e.group,sets:cardio?'1':'3',reps:cardio?'20 min':'10-12',load:'',rest:cardio?'':'60s',note:''});
-    render(true);toast('Adicionado: '+e.name);
-  },
-  pgrp:t=>{S.pg=t.dataset.g;renderPicker()},
-  lgrp:t=>{S.lg=t.dataset.g;render(true)},
-  mv:t=>{const i=+t.dataset.i,j=i+ +t.dataset.d,a=S.draft.exercises;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];render(true)},
-  rm:t=>{S.draft.exercises.splice(+t.dataset.i,1);render(true)},
-  saveWorkout:async()=>{
-    const {id,createdAt,...data}=S.draft;data.name=(data.name||'').trim()||'Treino';
-    await setDoc(doc(db,'workouts',id),data,{merge:true});toast('Treino salvo ✔');go('student',{id:data.studentId});
-  },
-  newEx:()=>modal(exForm({custom:true})),
-  editEx:t=>modal(exForm(libMap()[t.dataset.id])),
-  saveEx:async t=>{
-    const id=t.dataset.id,custom=t.dataset.custom==='1';
-    const data={equip:$('#xe').value.trim(),instructions:$('#xi').value.trim(),video:$('#xv').value.trim()};
-    if(custom){const name=$('#xn').value.trim();if(!name)return toast('Informe o nome');Object.assign(data,{name,group:$('#xg').value,custom:true})}
-    await setDoc(doc(db,'exercises',id||'c_'+Date.now()),data,{merge:true});closeModal();toast('Exercício salvo');
-  },
-  delEx:async t=>{if(confirm(t.dataset.custom==='1'?'Excluir este exercício?':'Restaurar o padrão deste exercício?')){await deleteDoc(doc(db,'exercises',t.dataset.id));closeModal()}},
-  saveCfg:async()=>{await setDoc(doc(db,'config','main'),{personalName:$('#cname').value.trim(),whatsapp:$('#cwa').value.replace(/\D/g,'')});toast('Salvo ✔')},
-  chk:t=>{const w=S.p.id,s=getSess(w);s[t.dataset.i]=s[t.dataset.i]||{};s[t.dataset.i].done=t.checked;saveSess(w);t.closest('.card').classList.toggle('done',t.checked)},
-  finish:async t=>{
-    const w=S.workouts.find(x=>x.id===t.dataset.id),ss=getSess(w.id);
-    const entries=w.exercises.map((e,i)=>({name:e.name,done:!!(ss[i]&&ss[i].done),load:(ss[i]&&ss[i].load)||''}));
-    await addDoc(collection(db,'logs'),{studentId:S.user.uid,workoutId:w.id,workoutName:w.name,date:new Date().toISOString(),entries});
-    S.sess[w.id]={};saveSess(w.id);toast('Treino registrado! 💪');go('home');
-  }
-};
-function exForm(e){
-  e=e||{};const custom=!!e.custom;
-  return `<h3>${e.id?'Editar exercício':'Novo exercício'}</h3>
-  ${custom?`<label>Nome</label><input id="xn" value="${esc(e.name||'')}"><label>Grupo muscular</label><select id="xg">${GROUPS.map(g=>`<option ${e.group===g?'selected':''}>${esc(g)}</option>`).join('')}</select>`:`<p><b>${esc(e.name)}</b> <span class="tag">${esc(e.group)}</span></p>`}
-  <label>Equipamento</label><input id="xe" value="${esc(e.equip||'')}"><label>Instruções</label><textarea id="xi" rows="5">${esc(e.instructions||'')}</textarea>
-  <label>Link do vídeo (YouTube). Vazio = busca automática</label><input id="xv" autocapitalize="none" value="${esc(e.video||'')}" placeholder="https://youtu.be/...">
-  <button class="btn" data-act="saveEx" data-id="${esc(e.id||'')}" data-custom="${custom?1:0}">Salvar</button>
-  ${e.id&&(custom||e.overridden)?`<button class="btn red" data-act="delEx" data-id="${esc(e.id)}" data-custom="${custom?1:0}">${custom?'Excluir exercício':'Restaurar padrão'}</button>`:''}
-  <button class="btn sec" data-act="closeModal">Cancelar</button>`;
-}
 
-/* ---------- eventos globais ---------- */
-document.addEventListener('click',e=>{const t=e.target.closest('[data-act]');if(!t)return;const f=actions[t.dataset.act];if(f)f(t,e)});
-document.addEventListener('input',e=>{
-  const t=e.target;
-  if(t.dataset.f&&S.draft){S.draft.exercises[t.dataset.i][t.dataset.f]=t.value}
-  else if(t.id==='wname'&&S.draft)S.draft.name=t.value;
-  else if(t.dataset.sf){const w=S.p.id,s=getSess(w);s[t.dataset.i]=s[t.dataset.i]||{};s[t.dataset.i][t.dataset.sf]=t.value;saveSess(w)}
-  else if(t.id==='pq'){S.pq=t.value;renderPicker()}
-  else if(t.id==='lq'){S.lq=t.value;$('#liblist').innerHTML=libList()}
-});
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.target.id==='pw'||e.target.id==='lg'))doLogin()});
-render(true);
-</script>
+    /* ---------- sessão do aluno (treino em andamento) ---------- */
+    function getSess(id) { if (!S.sess[id]) { try { S.sess[id] = JSON.parse(localStorage.getItem('sess_' + id) || '{}') } catch { S.sess[id] = {} } } return S.sess[id] }
+    function saveSess(id) { try { localStorage.setItem('sess_' + id, JSON.stringify(S.sess[id])) } catch { } }
+
+    /* ---------- seletor de exercícios ---------- */
+    function openPicker() { S.pq = ''; S.pg = ''; modal(`<h3>Adicionar exercício</h3><input id="pq" placeholder="Buscar..."><div id="pchips"></div><div id="plist"></div><button class="btn" data-act="closeModal">Concluir</button>`); renderPicker() }
+    function renderPicker() {
+      const q = norm(S.pq);
+      $('#pchips').innerHTML = groupChips('pgrp', S.pg);
+      $('#plist').innerHTML = getLib().filter(e => (!S.pg || e.group === S.pg) && (!q || norm(e.name).includes(q))).map(e => `<div class="card click" data-act="pick" data-id="${esc(e.id)}"><div class="row"><b class="grow">${esc(e.name)}</b><span class="tag">${esc(e.group)}</span></div></div>`).join('') || '<p class="muted">Nada encontrado.</p>';
+    }
+
+    /* ---------- ações ---------- */
+    async function doLogin() {
+      const l = $('#lg').value.trim().toLowerCase(), pw = $('#pw').value; if (!l || !pw) return toast('Preencha login e senha');
+      try { await signInWithEmailAndPassword(auth, l.includes('@') ? l : l + '@aluno.fit', pw) } catch (e) { toast('Login ou senha incorretos') }
+    }
+    function studentForm(s) {
+      s = s || {};
+      return `<h3>${s.id ? 'Editar aluno' : 'Novo aluno'}</h3><label>Nome</label><input id="sn" value="${esc(s.name || '')}">
+  ${s.id ? '' : `<label>Login (sem espaços, ex: maria.souza) ou e-mail</label><input id="sl" autocapitalize="none"><label>Senha (mínimo 6 caracteres)</label><input id="sp" type="text" autocapitalize="none">`}
+  <label>Objetivo</label><input id="sg" value="${esc(s.goal || '')}" placeholder="Ex: hipertrofia, emagrecimento"><label>Observações (lesões, rotina...)</label><textarea id="so" rows="3">${esc(s.notes || '')}</textarea>
+  <button class="btn" data-act="saveStudent" data-id="${s.id || ''}">Salvar</button><button class="btn sec" data-act="closeModal">Cancelar</button>`;
+    }
+    async function createStudent() {
+      const name = $('#sn').value.trim(), login = $('#sl').value.trim().toLowerCase(), pw = $('#sp').value, goal = $('#sg').value.trim(), notes = $('#so').value.trim();
+      if (!name) return toast('Informe o nome');
+      if (!login.includes('@') && !/^[a-z0-9._-]{3,}$/.test(login)) return toast('Login: use letras minúsculas, números, ponto ou traço (mín. 3)');
+      if (pw.length < 6) return toast('Senha com no mínimo 6 caracteres');
+      const email = login.includes('@') ? login : login + '@aluno.fit';
+      const sec = initializeApp(CONFIG.firebase, 'sec' + Date.now()), sa = getAuth(sec); let uid;
+      try {
+        try { uid = (await createUserWithEmailAndPassword(sa, email, pw)).user.uid }
+        catch (e) {
+          if (e.code === 'auth/email-already-in-use') { try { uid = (await signInWithEmailAndPassword(sa, email, pw)).user.uid } catch { return toast('Esse login já existe com outra senha. Use outro login.') } }
+          else return toast('Erro ao criar login: ' + (e.code || ''));
+        }
+        await signOut(sa);
+        await setDoc(doc(db, 'students', uid), { name, login, goal, notes, createdAt: serverTimestamp() });
+        closeModal(); toast('Aluno criado! Passe o login e a senha para ele.');
+      } finally { deleteApp(sec).catch(() => { }) }
+    }
+    const actions = {
+      login: doLogin,
+      forgot: async () => { const l = ($('#lg').value || '').trim().toLowerCase(); if (!l.includes('@')) return toast('Digite seu e-mail no campo de login para receber o link'); try { await sendPasswordResetEmail(auth, l); toast('Enviamos um e-mail de redefinição') } catch { toast('Não foi possível enviar') } },
+      logout: () => signOut(auth),
+      go: t => go(t.dataset.v, { id: t.dataset.id }),
+      closeModal: (t, e) => { if (t.classList.contains('ov') && e.target !== t) return; closeModal() },
+      toggle: (t, e) => { if (e.target.closest('a,button.btn:not([data-act=toggle]),input')) return; const c = t.closest('.card'); const d = c.querySelector('.det'); if (d) d.classList.toggle('hidden') },
+      newStudent: () => modal(studentForm()),
+      editStudent: t => modal(studentForm(S.students.find(x => x.id === t.dataset.id))),
+      saveStudent: async t => {
+        if (!t.dataset.id) return createStudent();
+        const name = $('#sn').value.trim(); if (!name) return toast('Informe o nome');
+        await setDoc(doc(db, 'students', t.dataset.id), { name, goal: $('#sg').value.trim(), notes: $('#so').value.trim() }, { merge: true }); closeModal(); toast('Salvo');
+      },
+      delStudent: async t => {
+        if (!confirm('Excluir este aluno e todos os treinos e registros dele?')) return;
+        const id = t.dataset.id, b = writeBatch(db);
+        S.workouts.filter(w => w.studentId === id).forEach(w => b.delete(doc(db, 'workouts', w.id)));
+        S.logs.filter(l => l.studentId === id).forEach(l => b.delete(doc(db, 'logs', l.id)));
+        b.delete(doc(db, 'students', id)); await b.commit(); go('students'); toast('Aluno excluído');
+      },
+      newWorkout: t => modal(`<h3>Novo treino</h3><label>Nome</label><input id="wn" value="Treino A" placeholder="Ex: Treino de bíceps"><button class="btn" data-act="createWorkout" data-id="${t.dataset.id}">Criar e adicionar exercícios</button><button class="btn sec" data-act="closeModal">Cancelar</button>`),
+      createWorkout: async t => {
+        const name = $('#wn').value.trim() || 'Treino', studentId = t.dataset.id, order = Date.now();
+        const ref = await addDoc(collection(db, 'workouts'), { studentId, name, exercises: [], order, createdAt: serverTimestamp() });
+        closeModal(); S.draft = { id: ref.id, studentId, name, exercises: [], order }; S.view = 'wedit'; S.p = { id: ref.id }; render(true); window.scrollTo(0, 0);
+      },
+      delWorkout: async t => { if (confirm('Excluir este treino?')) { await deleteDoc(doc(db, 'workouts', t.dataset.id)); toast('Treino excluído') } },
+      dupWorkout: t => {
+        const opts = [...S.students].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR')).map(s => `<option value="${s.id}">${esc(s.name)}</option>`).join('');
+        modal(`<h3>Copiar treino para</h3><select id="dto">${opts}</select><button class="btn" data-act="doDup" data-id="${t.dataset.id}">Copiar</button><button class="btn sec" data-act="closeModal">Cancelar</button>`);
+      },
+      doDup: async t => {
+        const w = S.workouts.find(x => x.id === t.dataset.id); if (!w) return;
+        await addDoc(collection(db, 'workouts'), { studentId: $('#dto').value, name: w.name, exercises: w.exercises, order: Date.now(), createdAt: serverTimestamp() }); closeModal(); toast('Treino copiado');
+      },
+      openPicker,
+      pick: t => {
+        const e = libMap()[t.dataset.id]; if (!e || !S.draft) return;
+        const cardio = e.group === 'Cardio';
+        S.draft.exercises.push({ key: e.id, name: e.name, group: e.group, sets: cardio ? '1' : '3', reps: cardio ? '20 min' : '10-12', load: '', rest: cardio ? '' : '60s', note: '' });
+        render(true); toast('Adicionado: ' + e.name);
+      },
+      pgrp: t => { S.pg = t.dataset.g; renderPicker() },
+      lgrp: t => { S.lg = t.dataset.g; render(true) },
+      mv: t => { const i = +t.dataset.i, j = i + +t.dataset.d, a = S.draft.exercises; if (j < 0 || j >= a.length) return;[a[i], a[j]] = [a[j], a[i]]; render(true) },
+      rm: t => { S.draft.exercises.splice(+t.dataset.i, 1); render(true) },
+      saveWorkout: async () => {
+        const { id, createdAt, ...data } = S.draft; data.name = (data.name || '').trim() || 'Treino';
+        await setDoc(doc(db, 'workouts', id), data, { merge: true }); toast('Treino salvo ✔'); go('student', { id: data.studentId });
+      },
+      newEx: () => modal(exForm({ custom: true })),
+      editEx: t => modal(exForm(libMap()[t.dataset.id])),
+      saveEx: async t => {
+        const id = t.dataset.id, custom = t.dataset.custom === '1';
+        const data = { equip: $('#xe').value.trim(), instructions: $('#xi').value.trim(), video: $('#xv').value.trim() };
+        if (custom) { const name = $('#xn').value.trim(); if (!name) return toast('Informe o nome'); Object.assign(data, { name, group: $('#xg').value, custom: true }) }
+        await setDoc(doc(db, 'exercises', id || 'c_' + Date.now()), data, { merge: true }); closeModal(); toast('Exercício salvo');
+      },
+      delEx: async t => { if (confirm(t.dataset.custom === '1' ? 'Excluir este exercício?' : 'Restaurar o padrão deste exercício?')) { await deleteDoc(doc(db, 'exercises', t.dataset.id)); closeModal() } },
+      saveCfg: async () => { await setDoc(doc(db, 'config', 'main'), { personalName: $('#cname').value.trim(), whatsapp: $('#cwa').value.replace(/\D/g, '') }); toast('Salvo ✔') },
+      chk: t => { const w = S.p.id, s = getSess(w); s[t.dataset.i] = s[t.dataset.i] || {}; s[t.dataset.i].done = t.checked; saveSess(w); t.closest('.card').classList.toggle('done', t.checked) },
+      finish: async t => {
+        const w = S.workouts.find(x => x.id === t.dataset.id), ss = getSess(w.id);
+        const entries = w.exercises.map((e, i) => ({ name: e.name, done: !!(ss[i] && ss[i].done), load: (ss[i] && ss[i].load) || '' }));
+        await addDoc(collection(db, 'logs'), { studentId: S.user.uid, workoutId: w.id, workoutName: w.name, date: new Date().toISOString(), entries });
+        S.sess[w.id] = {}; saveSess(w.id); toast('Treino registrado! 💪'); go('home');
+      }
+    };
+    function exForm(e) {
+      e = e || {}; const custom = !!e.custom;
+      return `<h3>${e.id ? 'Editar exercício' : 'Novo exercício'}</h3>
+  ${custom ? `<label>Nome</label><input id="xn" value="${esc(e.name || '')}"><label>Grupo muscular</label><select id="xg">${GROUPS.map(g => `<option ${e.group === g ? 'selected' : ''}>${esc(g)}</option>`).join('')}</select>` : `<p><b>${esc(e.name)}</b> <span class="tag">${esc(e.group)}</span></p>`}
+  <label>Equipamento</label><input id="xe" value="${esc(e.equip || '')}"><label>Instruções</label><textarea id="xi" rows="5">${esc(e.instructions || '')}</textarea>
+  <label>Link do vídeo (YouTube). Vazio = busca automática</label><input id="xv" autocapitalize="none" value="${esc(e.video || '')}" placeholder="https://youtu.be/...">
+  <button class="btn" data-act="saveEx" data-id="${esc(e.id || '')}" data-custom="${custom ? 1 : 0}">Salvar</button>
+  ${e.id && (custom || e.overridden) ? `<button class="btn red" data-act="delEx" data-id="${esc(e.id)}" data-custom="${custom ? 1 : 0}">${custom ? 'Excluir exercício' : 'Restaurar padrão'}</button>` : ''}
+  <button class="btn sec" data-act="closeModal">Cancelar</button>`;
+    }
+
+    /* ---------- eventos globais ---------- */
+    document.addEventListener('click', e => { const t = e.target.closest('[data-act]'); if (!t) return; const f = actions[t.dataset.act]; if (f) f(t, e) });
+    document.addEventListener('input', e => {
+      const t = e.target;
+      if (t.dataset.f && S.draft) { S.draft.exercises[t.dataset.i][t.dataset.f] = t.value }
+      else if (t.id === 'wname' && S.draft) S.draft.name = t.value;
+      else if (t.dataset.sf) { const w = S.p.id, s = getSess(w); s[t.dataset.i] = s[t.dataset.i] || {}; s[t.dataset.i][t.dataset.sf] = t.value; saveSess(w) }
+      else if (t.id === 'pq') { S.pq = t.value; renderPicker() }
+      else if (t.id === 'lq') { S.lq = t.value; $('#liblist').innerHTML = libList() }
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Enter' && (e.target.id === 'pw' || e.target.id === 'lg')) doLogin() });
+    render(true);
+  </script>
 </body>
+
 </html>
