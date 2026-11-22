@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // TROQUE pelo mesmo e-mail que você colocou em CONFIG.personalEmail no index.html (tudo em minúsculas)
+    function isPersonal() {
+      return request.auth != null && request.auth.token.email.lower() == 'seu-email@exemplo.com';
+    }
+    function signedIn() { return request.auth != null; }
+
+    match /students/{id} {
+      allow read: if isPersonal() || (signedIn() && request.auth.uid == id);
+      allow write: if isPersonal();
+    }
+    match /workouts/{id} {
+      allow read: if isPersonal() || (signedIn() && resource.data.studentId == request.auth.uid);
+      allow write: if isPersonal();
+    }
+    match /exercises/{id} {
+      allow read: if signedIn();
+      allow write: if isPersonal();
+    }
+    match /config/{id} {
+      allow read: if signedIn();
+      allow write: if isPersonal();
+    }
+    match /logs/{id} {
+      allow read: if isPersonal() || (signedIn() && resource.data.studentId == request.auth.uid);
+      allow create: if signedIn() && request.resource.data.studentId == request.auth.uid;
+      allow delete: if isPersonal();
+    }
+  }
+}
